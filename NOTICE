@@ -5,7 +5,7 @@ This project is an independent reimplementation, in Rust, of the Radix
 signaling server protocol and behavior originally implemented in TypeScript
 by Radix Publishing Ltd / RDX Works Ltd in the repository:
 
-    https://github.com/radixdlt/signaling-server
+    https://github.com/radixdlt/signaling-rust
 
 This project is not a fork of that repository (no code from it is copied or
 redistributed here); it is a from-scratch, protocol-compatible
