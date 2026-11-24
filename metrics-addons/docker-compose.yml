@@ -1,0 +1,59 @@
+# Optional convenience stack: Prometheus + Grafana, preconfigured to scrape
+# and graph signaling-rust. Only use this if this VPS does NOT already run
+# a Prometheus/Grafana stack for something else (e.g. the Radix full node).
+# If it does, don't run a second stack — add the scrape job from
+# prometheus.yml to the existing Prometheus, and import grafana-dashboard.json
+# into the existing Grafana instead.
+#
+# Usage:
+#   1. Edit prometheus.yml's target to this host's actual HTTP_PORT.
+#   2. docker compose -f metrics-addons/docker-compose.yml up -d
+#   3. Open Grafana at http://<host>:3000 (default login admin/admin, you
+#      will be prompted to change it), add the Prometheus datasource
+#      pointing at http://prometheus:9090, then import grafana-dashboard.json
+#      (Dashboards -> New -> Import -> Upload JSON file).
+#
+# Resource limits are set deliberately low — this is monitoring tooling, it
+# should never compete meaningfully with signaling-rust, Redis, or the
+# Radix full node for CPU/memory on the same host.
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: signaling-rust-prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+    # If signaling-rust runs directly on the host (not in this compose
+    # project), Prometheus needs to reach it via the host network. Uncomment
+    # the line below instead of relying on "localhost" inside the container,
+    # or set the target in prometheus.yml to the host's real IP.
+    # network_mode: "host"
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: signaling-rust-grafana
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+
+volumes:
+  prometheus-data:
+  grafana-data:

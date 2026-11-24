@@ -1,0 +1,24 @@
+signaling-rust
+Copyright (c) 2026 [Luis Toro Teijeriro / linuxx5046]
+
+This project is an independent reimplementation, in Rust, of the Radix
+signaling server protocol and behavior originally implemented in TypeScript
+by Radix Publishing Ltd / RDX Works Ltd in the repository:
+
+    https://github.com/radixdlt/signaling-server
+
+This project is not a fork of that repository (no code from it is copied or
+redistributed here); it is a from-scratch, protocol-compatible
+reimplementation produced through independent study of its public source,
+documented behavior, and tests. "Radix", "Radix DLT" and related marks are
+the property of their respective owners; this project is not officially
+endorsed by or affiliated with Radix Publishing Ltd / RDX Works Ltd / the
+RadixDAO except as such endorsement or affiliation may be separately and
+explicitly stated elsewhere.
+
+Authorship and maintenance of this reimplementation (signaling-rust):
+    [Luis Toro Teijeriro / linuxx5046] -- https://github.com/linuxx5046
+
+Licensing: see LICENSE (Business Source License 1.1). This file is provided
+for attribution purposes as described in that license and does not itself
+modify its terms.

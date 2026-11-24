@@ -1,0 +1,28 @@
+# Prometheus scrape config for signaling-rust.
+#
+# This is a minimal, standalone prometheus.yml. If this VPS already runs a
+# Prometheus instance for something else (e.g. the Radix full node), do NOT
+# run a second Prometheus process — instead copy only the `scrape_configs`
+# job below into the existing prometheus.yml and reload/restart that
+# instance. Running two Prometheus processes on one host is unnecessary and
+# wastes resources.
+#
+# Edit the target below to match this server's actual HTTP_PORT (the same
+# port /health and /metrics are served on — see the main README's
+# Configuration section). Default assumed here: 4001.
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "signaling-rust"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["localhost:4001"] # <-- set to this host:HTTP_PORT
+        labels:
+          service: "signaling-rust"
+          # If running multiple instances behind a load balancer, give each
+          # one a distinct "instance" label here instead of relying on
+          # Prometheus's default target-address label, e.g.:
+          # instance: "signaling-rust-1"

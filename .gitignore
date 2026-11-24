@@ -1,0 +1,25 @@
+# --- Rust build artifacts ---
+/target
+**/*.rs.bk
+*.pdb
+
+# Cargo.lock IS committed for this project (it's a binary/application,
+# not a library) — do not add it here.
+
+# --- Secrets / local config ---
+.env
+.env.*
+!.env.example
+redis.conf
+redis-test.conf
+*.pem
+*.key
+
+# --- Editor / OS cruft ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# --- Logs ---
+*.log
